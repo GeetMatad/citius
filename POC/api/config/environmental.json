@@ -1,0 +1,20 @@
+{
+  "DB_Config": {
+    "options": {
+      "encrypt": false
+    },
+
+    "connectionTimeout": 15000,
+    "requestTimeout": 5000,
+    "pool": {
+      "max": 10,
+      "min": 0,
+      "idleTimeoutMillis": 30000
+    }
+  },
+  "secret": "geetapplication",
+  "whiteListedClient": [
+    "http://localhost:4200",
+    "http://localhost:9000"
+  ]
+}

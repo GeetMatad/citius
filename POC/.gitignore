@@ -1,0 +1,13 @@
+#node_modules
+api/node_modules
+
+#package-lock
+api/applicationlog
+api/app/scheduler/mofa/applicationlog
+
+#package-lock
+api/package-lock.json
+online/package-lock.json
+
+/.idea
+
