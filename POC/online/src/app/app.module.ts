@@ -12,6 +12,10 @@ import {WellComponent} from "./components/well_list/well/well.component";
 import {WellListComponent} from "./components/well_list/well_list.component";
 import {FooterComponent} from "./components/footer/footer.component";
 import {HeaderComponent} from "./components/header/header.component";
+import {ResponseInterceptor} from "./providers/response-interceptor.service";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AccountService} from "./providers/account.service";
+import {DataShareService} from "./providers/datashare.service";
 
 @NgModule({
   declarations: [
@@ -30,8 +34,17 @@ import {HeaderComponent} from "./components/header/header.component";
     CommonModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AccountService,
+    DataShareService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ResponseInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

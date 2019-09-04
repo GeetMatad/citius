@@ -5,25 +5,18 @@
           data-target="#navbarCollapse"
           aria-controls="navbarCollapse"
     aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>sadas
+    <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class=" nav navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="navbar-brand">
+    <ul class=" nav navbar-nav mr-auto" *ngIf="!!this.token">
+      <li class="nav-item" >
         <a class="nav-link" routerLink="/user-list">User List</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/well-list"> Well List</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/contact-list">Contacts</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/contact-create">Create</a>
-      </li>
-
     </ul>
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right" *ngIf="!(!!this.token)">
       <li class="nav-item">
         <a class="nav-link glyphicon glyphicon-log-in" routerLink="/login">login</a>
       </li>

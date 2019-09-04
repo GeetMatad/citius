@@ -21,13 +21,13 @@ responseService.validateAndSend = (err, response, req, res, customError) => {
 	let logMsg = {
 		stacktrace: stack
 	};
-	console.log('req>>>>>>>>>>>>>>>>>',req.url)
 	if (err || customError) {
 		logMsg.msg = [(!!err ? JSON.stringify(err) : '')].concat([customError]);
 		res.status(((err && err.status) ? err.status : (customError && customError.status) ? customError.status : 500)).
 		send(responseService.setErrorResponse(customError));
 	} else if (response) {
 		response = responseService.setSuccessResponse(response);
+		res.send(response);
 	} else {
 		res.send(responseService.setErrorResponse());
 	}
@@ -55,7 +55,8 @@ responseService.setSuccessResponse = (data) => {
 	return {
 		status: 200,
 		success: true,
-		message: (data && data.message) ? data.message : (data && data.recordset && data.recordset.length > 0) ? 'Processed Successfully.' : 'noRecordFound',
+		message: (data && data.message) ? data.message : (data && data.recordset && data.recordset.length > 0) ?
+			'Processed Successfully.' : 'noRecordFound',
 		content: (data && data.recordset) ? data.recordset : []
 	}
 };

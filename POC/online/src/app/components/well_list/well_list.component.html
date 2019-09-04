@@ -1,18 +1,27 @@
 <div class="container" style="margin-top: 70px;">
+
+<div>
+  <well_details [fromSource]="sourceId" (wellDetails)="receiveDetails($event)"></well_details>
+
+</div>
   <h1>Well List</h1>
+  <div >
   <table class="table table-bordered">
     <thead>
     <tr>
       <th>Name</th>
-      <th>age</th>
+      <th>Type</th>
+      <th>Source</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let user of userList">
-      <td>{{ user.name }}</td>
-      <td>{{ user.age }}</td>
+    <tr style="color: #dc3545;" *ngFor="let well of wellList">
+      <td>{{ well.name }}</td>
+      <td [ngClass]="well.type ==='rls' ? 'bg-success' : 'td-colour'">{{ well.type }}</td>
+      <td (click)="openAddWell($event)" value="{{well.source}}" #srcKey>{{ well.source }}</td>
     </tr>
     </tbody>
   </table>
+  </div>
 </div>
 

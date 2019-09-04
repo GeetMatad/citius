@@ -1,6 +1,7 @@
 'use strict';
 let jwt = require('jsonwebtoken');
-let config = require('../../config/environmental')
+let config = require('../../config/environmental');
+const responseService = require('../../utility/responseService')
 
 exports.getWeekdays = function(req, res) {
 		/*res.writeHead(200, {'Content-Type': 'text/html'}); // http header
@@ -32,7 +33,7 @@ exports.login = function(req, res) {
 	// For the given username fetch user from DB
 	let mockedUsername = 'test';
 	let mockedPassword = 'test';
-
+	let content={}
 	if (username && password) {
 		if (username === mockedUsername && password === mockedPassword) {
 			let token = jwt.sign({username: username},
@@ -41,25 +42,22 @@ exports.login = function(req, res) {
 					expiresIn: '24h' // expires in 24 hours
 				}
 			);
-			// return the JWT token for the future API calls
-			res.json({
-				success: true,
-				message: 'Authentication successful!',
-				token: token
-			});
+			responseService.validateAndSend(null, {
+				message: 'loggedin successfully.',
+				recordset: {
+					userContext: token
+				}
+			}, null, res);
 		} else {
-			res.send(403).json({
-				success: false,
-				message: 'Incorrect username or password'
+			responseService.validateAndSend(content, null, req, res, {
+				status: 200,
+				message: "Invalid Credential"
 			});
 		}
 	} else {
-		res.send(400).json({
-			success: false,
-			message: 'Authentication failed! Please check the request'
-		});
+		responseService.validateAndSend({
+			status: 400,
+			message: "Authentication failed! Please check the request"
+		}, null, req, res);
 	}
 };
-const  checkUserValid  = (username,password, cb) => {
-	return  username === 'test' && password ==='test'
-}

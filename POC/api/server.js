@@ -20,14 +20,28 @@ app.use((req, res, next) => {
     if (host === undefined) {
         host = req.headers.host;
     }
-    if (req.headers.referer === undefined) {
+    if (req.headers.referer == undefined) {
         req.headers.referer = host;
     }
+
+    if(config.whiteListedClient.indexOf(host)>-1 && req.headers.referer.indexOf(host)>-1){
+        res.setHeader('Access-Control-Allow-Origin', host);
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'authorization, content-type');
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+
+    // Pass to next layer of middleware
     if ('OPTIONS' === req.method) {
-            res.sendStatus(200);
-        } else {
-            next();
-        }
+        res.sendStatus(200);
+    } else {
+        next();
+    }
+     }else{
+          res.sendStatus(404);
+    }
 });
 const routes = require('./app/routes/router');
 routes(app);
